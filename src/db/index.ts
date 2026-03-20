@@ -1,4 +1,4 @@
-import { drizzle } from "drizzle-orm/libsql";
+import { drizzle } from "drizzle-orm/node-sqlite";
 import * as schema from "./schema";
 
-export const db = drizzle("file:sqlite.db", { schema });
+export const db = drizzle("sqlite.db", { schema });
