@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import { db } from "../db";
 import { usersTable } from "../db/schema";
 
-const users = await db.select().from(usersTable).all();
+const users = db.select().from(usersTable).all();
 ---
 
 <Layout>
