@@ -12,10 +12,18 @@
     {
       Astro.locals.user ? (
         <p>Welcome, {Astro.locals.user.name}!</p>
+        <button id="log-out">Log Out</button>
       ) : (
         <a href="/signin">Login</a>
       )
     }
+    <script>
+      import { authClient } from "../lib/auth-client";
+      document.getElementById("log-out")?.addEventListener("click",()=>{
+        authClient.signOut();
+        document.location.reload();  
+      })
+    </script>
     <slot />
   </body>
 </html>
