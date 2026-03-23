@@ -9,6 +9,13 @@
     <title>Astro Basics Drizzle</title>
   </head>
   <body>
+    {
+      Astro.locals.user ? (
+        <p>Welcome, {Astro.locals.user.name}!</p>
+      ) : (
+        <a href="/signin">Login</a>
+      )
+    }
     <slot />
   </body>
 </html>

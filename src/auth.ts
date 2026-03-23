@@ -7,4 +7,5 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  baseURL: "http://localhost:4321/",
 });
