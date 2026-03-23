@@ -1,8 +1,14 @@
-import { int, sqliteTable, text } from "drizzle-orm/sqlite-core";
+export interface User {
+  id?: number;
+  name: string;
+  age: number;
+  email: string;
+  posts?: Post[];
+}
 
-export const usersTable = sqliteTable("users_table", {
-  id: int().primaryKey({ autoIncrement: true }),
-  name: text().notNull(),
-  age: int().notNull(),
-  email: text().notNull().unique(),
-});
+export interface Post {
+  id?: number;
+  title: string;
+  content: string;
+  author_id: number;
+}

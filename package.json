@@ -9,15 +9,13 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "seed": "tsx src/db/seed.ts"
   },
   "dependencies": {
-    "@libsql/client": "^0.17.2",
-    "astro": "^6.0.7",
-    "drizzle-orm": "^1.0.0-beta.18-7eb39f0"
+    "astro": "^6.0.7"
   },
   "devDependencies": {
-    "drizzle-kit": "^1.0.0-beta.18-7eb39f0",
     "tsx": "^4.21.0"
   }
 }

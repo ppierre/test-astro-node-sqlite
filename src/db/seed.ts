@@ -1,13 +1,19 @@
-import { db } from "./index";
-import * as schema from "./schema";
+import { allUser, insertUser } from "./index";
+import type { User } from "./schema";
 
-const user: typeof schema.usersTable.$inferInsert = {
-  name: "John",
+const user1: User = {
+  name: "david",
+  age: 40,
+  email: "david@example.com",
+};
+const user2: User = {
+  name: "alice",
   age: 30,
-  email: "john@example.com",
+  email: "alice@example.com",
 };
 
-await db.insert(schema.usersTable).values(user);
+insertUser(user1);
+insertUser(user2);
 
-const users = await db.select().from(schema.usersTable);
+const users = allUser();
 console.log("Getting all users from the database: ", users);

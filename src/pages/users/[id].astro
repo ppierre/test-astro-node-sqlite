@@ -1,0 +1,27 @@
+---
+import { Debug } from "astro:components";
+import { getUserWithPosts } from "../../db";
+import Layout from "../../layouts/Layout.astro";
+export const prerender = false;
+
+const { id } = Astro.params;
+const user = getUserWithPosts(Number(id));
+---
+
+<Layout>
+  <h1>{user.name}</h1>
+  <p>{user.email}</p>
+  <a href={`/users/edit/${user.id}`}>Edit User</a>
+  <h2>Posts</h2>
+  <ul>
+    {
+      user.posts?.map((post) => (
+        <li>
+          <h3>{post.title}</h3>
+          <p>{post.content}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>
+<Debug {user} />
