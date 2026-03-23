@@ -19,9 +19,9 @@
     }
     <script>
       import { authClient } from "../lib/auth-client";
-      document.getElementById("log-out")?.addEventListener("click",()=>{
-        authClient.signOut();
-        document.location.reload();  
+      document.getElementById("log-out")?.addEventListener("click",async ()=>{
+        await authClient.signOut();
+        window.location.reload(); 
       })
     </script>
     <slot />
