@@ -40,11 +40,10 @@ export const queryInsertUser = db.prepare(
 
 export function insertUser(user: User) {
   delete user.id;
-  // @ts-ignore
-  const result = queryInsertUser.get(user) as unknown as {
+  const { id } = queryInsertUser.get({name: user.name, age: user.age, email: user.email}) as unknown as {
     id: number;
   };
-  return result.id;
+  return id;
 }
 
 export const queryUpdateUser = db.prepare(
@@ -55,8 +54,12 @@ export function updateUser(user: User) {
   if (!user.id) {
     throw new Error("User ID is required for update.");
   }
-  // @ts-ignore
-  queryUpdateUser.run(user);
+  queryUpdateUser.run({
+    name: user.name,
+    age: user.age,
+    email: user.email,
+    id: user.id,
+  });
 }
 
 export const queryUserWithPosts = db.prepare(/* sql */ `
