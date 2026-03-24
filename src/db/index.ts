@@ -40,7 +40,11 @@ export const queryInsertUser = db.prepare(
 
 export function insertUser(user: User) {
   delete user.id;
-  const { id } = queryInsertUser.get({name: user.name, age: user.age, email: user.email}) as unknown as {
+  const { id } = queryInsertUser.get({
+    name: user.name,
+    age: user.age,
+    email: user.email,
+  } satisfies User) as unknown as {
     id: number;
   };
   return id;
@@ -59,7 +63,7 @@ export function updateUser(user: User) {
     age: user.age,
     email: user.email,
     id: user.id,
-  });
+  } satisfies User);
 }
 
 export const queryUserWithPosts = db.prepare(/* sql */ `
