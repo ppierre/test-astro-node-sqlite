@@ -1,14 +1,17 @@
-export interface User {
+export type User = {
   id?: number;
   name: string;
   age: number;
   email: string;
-  posts?: Post[];
-}
+};
 
-export interface Post {
+export type UserWithPosts = User & {
+  posts: Post[];
+};
+
+export type Post = {
   id?: number;
   title: string;
   content: string;
   author_id: number;
-}
+};

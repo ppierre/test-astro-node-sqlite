@@ -1,5 +1,5 @@
 import { DatabaseSync } from "node:sqlite";
-import type { User } from "./schema";
+import type { Post, User, UserWithPosts } from "./schema";
 
 export const db = new DatabaseSync("sqlite.db");
 
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS "posts_table" (
 export const queryAllUser = db.prepare(/* sql */ `SELECT * FROM users_table;`);
 
 export function allUser() {
-  return queryAllUser.all() as unknown as User[];
+  return queryAllUser.all() as User[];
 }
 
 export const queryUserById = db.prepare(
@@ -31,7 +31,7 @@ export const queryUserById = db.prepare(
 );
 
 export function getUserById(id: number) {
-  return queryUserById.get({ id }) as unknown as User;
+  return queryUserById.get({ id }) as User;
 }
 
 export const queryInsertUser = db.prepare(
@@ -40,11 +40,7 @@ export const queryInsertUser = db.prepare(
 
 export function insertUser(user: User) {
   delete user.id;
-  const { id } = queryInsertUser.get({
-    name: user.name,
-    age: user.age,
-    email: user.email,
-  } satisfies User) as unknown as {
+  const { id } = queryInsertUser.get(user) as {
     id: number;
   };
   return id;
@@ -58,12 +54,7 @@ export function updateUser(user: User) {
   if (!user.id) {
     throw new Error("User ID is required for update.");
   }
-  queryUpdateUser.run({
-    name: user.name,
-    age: user.age,
-    email: user.email,
-    id: user.id,
-  } satisfies User);
+  queryUpdateUser.run(user);
 }
 
 export const queryUserWithPosts = db.prepare(/* sql */ `
@@ -80,10 +71,10 @@ FROM users_table WHERE id=:id;
 `);
 
 export function getUserWithPosts(id: number) {
-  const rawUser = queryUserWithPosts.get({ id });
-  const user: User = {
-    ...(rawUser as unknown as User),
-    posts: JSON.parse(rawUser?.posts as string) as User["posts"],
+  const rawUserWithPosts = queryUserWithPosts.get({ id });
+  const user: UserWithPosts = {
+    ...(rawUserWithPosts as User),
+    posts: JSON.parse(rawUserWithPosts?.posts as string) as Post[],
   };
   return user;
 }
